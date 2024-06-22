@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Validate from "../src/Validate";
+
 
 export function useForm2(initialValues, validate,setsubmission,setsubmittedValues) {
     const [values, setValues] = useState(initialValues);
@@ -9,14 +9,14 @@ export function useForm2(initialValues, validate,setsubmission,setsubmittedValue
     useEffect(() => {
         const validationErrors = Object.keys(touched).reduce((acc, key) => {
             console.log(acc,key)
-            const error = Validate({ ...values, [key]: values[key] })[key];
+            const error = validate({ ...values, [key]: values[key] })[key];
             if (error) {
                 acc[key] = error;
             }
             return acc;
         }, {});
         setErrors(validationErrors);
-    }, [values, touched]);
+    }, [values, touched,validate]);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -48,7 +48,6 @@ export function useForm2(initialValues, validate,setsubmission,setsubmittedValue
             }, {})
         );
         if (Object.keys(validationErrors).length === 0) {
-            callback();
             setsubmittedValues(values); 
             setValues(initialValues); 
         }

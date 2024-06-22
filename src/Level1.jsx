@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useForm } from '../src/useform'; 
 import Validate from "../src/Validate";
+
 
 export default function Level1() {
     const [Guest, setGuest] = useState(false);
     const [submission, setsubmission] = useState(false);
     const [submittedValues, setsubmittedValues] = useState({});
 
-    if (submission) {
-        console.log("done");
-    }
 
     const initialValues = {
         name: '',
@@ -34,11 +33,11 @@ export default function Level1() {
 
     const submitForm = () => {
     };
-    console.log('Submitted Values:', submittedValues); // Check the values in submittedValues
+   
 
 
     return (
-        <div className='h-screen w-screen flex justify-center items-center bg-gray-100'>
+        <div className='h-screen w-screen flex flex-col justify-center items-center bg-gray-100'>
             <form onSubmit={(e) => handleSubmit(e, submitForm)} className='bg-indigo-300 p-8 shadow-lg rounded-md md:w-1/3'>
                 {
                     submission && (
@@ -91,7 +90,12 @@ export default function Level1() {
                         </div>
                     </div>
                 )}
-            </form>
+            </form><br />
+
+            <div className='flex '>
+           <Link to="/level2"> <button className='bg-indigo-400 text-white p-2'>Level2</button></Link>
+           <Link to="/level3"> <button className='bg-indigo-400 text-white p-2' >Level3</button></Link>
+            </div>
         </div>
     );
 }

@@ -1,21 +1,22 @@
 import { useState, useEffect } from 'react';
 
-export function useForm(initialValues, validate,setsubmission,setsubmittedValues) {
+
+export function useForm(initialValues, Validate,setsubmission,setsubmittedValues) {
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
 
+
     useEffect(() => {
-        // Validate only touched fields
         const validationErrors = Object.keys(touched).reduce((acc, key) => {
-            const error = validate({ ...values, [key]: values[key] })[key];
+            const error = Validate({ ...values, [key]: values[key] })[key];
             if (error) {
                 acc[key] = error;
             }
             return acc;
         }, {});
         setErrors(validationErrors);
-    }, [values, touched]);
+    }, [values, touched,Validate]);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -25,8 +26,7 @@ export function useForm(initialValues, validate,setsubmission,setsubmittedValues
         });
     };
 
-    const handleBlur = (e) => {
-       
+    const handleBlur = (e) => {     
         const { name } = e.target;
         console.log(name)
         setTouched({
@@ -37,7 +37,73 @@ export function useForm(initialValues, validate,setsubmission,setsubmittedValues
 
     const handleSubmit = (e, callback) => {
         e.preventDefault();
-        const validationErrors = validate(values);
+        const validationErrors = Validate(values);
+        setErrors(validationErrors);
+        setTouched(
+            Object.keys(values).reduce((acc, key) => {
+                acc[key] = true;
+                return acc;
+            }, {})
+        );
+        console.log(validationErrors)
+        if (Object.keys(validationErrors).length === 0) {
+            
+            console.log("values")
+            setsubmittedValues(values); 
+            setValues(initialValues); 
+        }
+        setsubmission(true)
+    };
+
+
+    return {
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+    };
+}
+
+
+export function useForm3(initialValues, Validate3,setsubmission,setsubmittedValues) {
+    const [values, setValues] = useState(initialValues);
+    const [errors, setErrors] = useState({});
+    const [touched, setTouched] = useState({});
+
+
+    useEffect(() => {
+        const validationErrors = Object.keys(touched).reduce((acc, key) => {
+            const error = Validate3({ ...values, [key]: values[key] })[key];
+            if (error) {
+                acc[key] = error;
+            }
+            return acc;
+        }, {});
+        setErrors(validationErrors);
+    }, [values, touched,Validate3]);
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setValues({
+            ...values,
+            [name]: type === 'checkbox' ? checked : value,
+        });
+    };
+
+    const handleBlur = (e) => {     
+        const { name } = e.target;
+        console.log(name)
+        setTouched({
+            ...touched,
+            [name]: true,
+        });
+    };
+
+    const handleSubmit = (e, callback) => {
+        e.preventDefault();
+        const validationErrors = Validate3(values);
         setErrors(validationErrors);
         setTouched(
             Object.keys(values).reduce((acc, key) => {
@@ -46,8 +112,8 @@ export function useForm(initialValues, validate,setsubmission,setsubmittedValues
             }, {})
         );
         if (Object.keys(validationErrors).length === 0) {
-            callback();
-            console.log("values",values)
+            
+            console.log("values")
             setsubmittedValues(values); 
             setValues(initialValues); 
         }

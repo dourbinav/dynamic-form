@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import Validate from '../src/Validate';
+import { Link } from 'react-router-dom';
+import {Validate2} from '../src/Validate';
 import { useForm2 } from './useForm2';
 
 export default function Level2() {
     const [submission, setsubmission] = useState(false);
-    const [submittedValues, setsubmittedValues] = useState(null);
+const [submittedValues, setsubmittedValues] = useState({});
     const initialValues = {
         name: '',
         email: '',
@@ -22,14 +23,14 @@ export default function Level2() {
         handleBlur,
         handleChange,
         handleSubmit,
-    } = useForm2(initialValues, Validate, setsubmittedValues);
+    } = useForm2(initialValues, Validate2, setsubmittedValues);
 
     const submitform=()=>{
 
     }
 
     return (
-        <div className='h-screen w-screen flex justify-center items-center bg-gray-100'>
+        <div className='h-screen w-screen flex flex-col justify-center items-center bg-gray-100'>
             {
                 submission ? (
                     <div className='bg-yellow-400 p-8 rounded-md text-center'>
@@ -102,6 +103,10 @@ export default function Level2() {
                     </form>
                 )
             }
+            <div className='flex '>
+           <Link to="/"> <button className='bg-indigo-400 text-white p-2'>Level1</button></Link>
+           <Link to="/level3"> <button className='bg-indigo-400 text-white p-2' >Level3</button></Link>
+            </div>
         </div>
     );
 }

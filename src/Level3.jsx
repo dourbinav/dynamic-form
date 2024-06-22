@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useForm2 } from './useForm2';
-import Validate from "./Validate";
+import {Validate3} from "./Validate";
 
 export default function Level3() {
     const initialValues = {
@@ -17,7 +18,7 @@ export default function Level3() {
         url: ""
     };
     
-    const { values, handleChange, handleSubmit, touched, errors, handleBlur } = useForm2({ initialValues, Validate });
+    const { values, handleChange, handleSubmit, touched, errors, handleBlur } = useForm2({ initialValues, Validate3 });
 
     return (
         <div className='h-screen w-screen flex justify-center items-center bg-gray-100'>
@@ -97,6 +98,7 @@ export default function Level3() {
                 <div>
                     <label className='block text-gray-700'>Field of study:</label>
                     <input className='rounded-sm w-full p-2 border border-gray-300' type='text' name="study" onChange={handleChange} onBlur={handleBlur} value={values.study} />
+                    {touched.study && errors.study && <p className='text-red-500'>{errors.study}</p>}
                 </div>
                 <div>
                     <label className='block text-gray-700'>Feedback:</label>
@@ -107,6 +109,10 @@ export default function Level3() {
                     <button type='submit' className='bg-blue-500 text-white px-4 py-2 rounded-md'>Submit</button>
                 </div>
             </form>
+            <div className='flex '>
+           <Link to="/"> <button className='bg-indigo-400 text-white p-2'>Level1</button></Link>
+           <Link to="/level2"> <button className='bg-indigo-400 text-white p-2' >Level2</button></Link>
+            </div>
         </div>
     );
 }
