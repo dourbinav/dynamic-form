@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import Level1 from "./Level1";
+import Level2 from "./Level2";
+import Level3 from "./Level3";
+import { RouterProvider ,createBrowserRouter} from "react-router-dom";
 
 function App() {
+    const router = createBrowserRouter([
+      {path:'/',element:<Level1 />},
+      {path:'/level2',element:<Level2 />},
+      {path:'/level3',element:<Level3 />}
+    ] )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={router}>
+     
+    </RouterProvider>
   );
 }
 
