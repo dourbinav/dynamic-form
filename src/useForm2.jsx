@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 
 
-export function useForm2(initialValues, validate,setsubmission,setsubmittedValues) {
+export function useForm2(initialValues, validate,) {
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
+    const [submission,setsubmission]=useState(false)
 
     useEffect(() => {
         const validationErrors = Object.keys(touched).reduce((acc, key) => {
-            console.log(acc,key)
             const error = validate({ ...values, [key]: values[key] })[key];
             if (error) {
                 acc[key] = error;
@@ -28,28 +28,27 @@ export function useForm2(initialValues, validate,setsubmission,setsubmittedValue
     };
 
     const handleBlur = (e) => {
-       
         const { name } = e.target;
-        console.log(name)
         setTouched({
             ...touched,
             [name]: true,
         });
     };
 
-    const handleSubmit = (e, callback) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const validationErrors = validate(values);
         setErrors(validationErrors);
         setTouched(
             Object.keys(values).reduce((acc, key) => {
+                console.log("acc",acc,"key",key)
                 acc[key] = true;
                 return acc;
             }, {})
         );
+        console.log("validation error",validationErrors)
         if (Object.keys(validationErrors).length === 0) {
-            setsubmittedValues(values); 
-            setValues(initialValues); 
+            console.log(values) 
         }
         setsubmission(true)
     };
@@ -62,6 +61,8 @@ export function useForm2(initialValues, validate,setsubmission,setsubmittedValue
         handleChange,
         handleBlur,
         handleSubmit,
+        submission,
+        setsubmission
     };
 }
 

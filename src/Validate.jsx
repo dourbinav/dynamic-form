@@ -66,17 +66,18 @@ const errors={};
     }
     return errors; 
 }  
-    export function Validate3(values){
-        const errors={};
 
-        if (!values.name) {
-            errors.name = 'Name is required';
-        }
-        if (!values.email) {
-            errors.email = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-            errors.email = 'Email address is invalid';
-        }        
+export function Validate3(values) {
+    const errors = {};
+
+    if (!values.name) {
+        errors.name = 'Name is required';
+    }
+    if (!values.email) {
+        errors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+        errors.email = 'Email address is invalid';
+    }
 
     if (!values.survey) {
         errors.survey = 'Survey topic is required';
@@ -111,3 +112,4 @@ const errors={};
 
     return errors;
 };
+

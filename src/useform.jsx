@@ -47,14 +47,12 @@ export function useForm(initialValues, Validate,setsubmission,setsubmittedValues
         );
         console.log(validationErrors)
         if (Object.keys(validationErrors).length === 0) {
-            
             console.log("values")
             setsubmittedValues(values); 
             setValues(initialValues); 
         }
         setsubmission(true)
     };
-
 
     return {
         values,
@@ -67,7 +65,7 @@ export function useForm(initialValues, Validate,setsubmission,setsubmittedValues
 }
 
 
-export function useForm3(initialValues, Validate3,setsubmission,setsubmittedValues) {
+export function useForm3(initialValues, Validate) {
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
@@ -75,14 +73,14 @@ export function useForm3(initialValues, Validate3,setsubmission,setsubmittedValu
 
     useEffect(() => {
         const validationErrors = Object.keys(touched).reduce((acc, key) => {
-            const error = Validate3({ ...values, [key]: values[key] })[key];
+            const error = Validate({ ...values, [key]: values[key] })[key];
             if (error) {
                 acc[key] = error;
             }
             return acc;
         }, {});
         setErrors(validationErrors);
-    }, [values, touched,Validate3]);
+    }, [values, touched,Validate]);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -103,7 +101,7 @@ export function useForm3(initialValues, Validate3,setsubmission,setsubmittedValu
 
     const handleSubmit = (e, callback) => {
         e.preventDefault();
-        const validationErrors = Validate3(values);
+        const validationErrors = Validate(values);
         setErrors(validationErrors);
         setTouched(
             Object.keys(values).reduce((acc, key) => {
@@ -114,10 +112,8 @@ export function useForm3(initialValues, Validate3,setsubmission,setsubmittedValu
         if (Object.keys(validationErrors).length === 0) {
             
             console.log("values")
-            setsubmittedValues(values); 
-            setValues(initialValues); 
         }
-        setsubmission(true)
+        
     };
 
 
