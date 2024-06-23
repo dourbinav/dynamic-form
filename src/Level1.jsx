@@ -25,6 +25,7 @@ export default function Level1() {
         handleBlur,
         handleChange,
         handleSubmit,
+        resetForm
     } = useForm(initialValues, Validate, setsubmission, setsubmittedValues);
 
     const handleClick = () => {
@@ -52,7 +53,7 @@ export default function Level1() {
                                     <p><span className='font-bold'>Guest Name:</span> {submittedValues.guestName}</p>
                                 )}
                             </div>
-                            <button className='bg-green-500 text-white mt-4 px-4 py-2 rounded-md' type='reset' onClick={() => setsubmission(!submission)}>Agree</button>
+                            <button className='bg-green-500 text-white mt-4 px-4 py-2 rounded-md' type='reset' onClick={() => resetForm}>Agree</button>
                         </div>
                     )
                 }

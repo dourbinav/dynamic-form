@@ -49,9 +49,14 @@ export function useForm(initialValues, Validate,setsubmission,setsubmittedValues
         if (Object.keys(validationErrors).length === 0) {
             console.log("values")
             setsubmittedValues(values); 
-            setValues(initialValues); 
         }
         setsubmission(true)
+    };
+    const resetForm = () => {
+        setValues(initialValues);
+        setErrors({});
+        setTouched({});
+        setsubmission(false);
     };
 
     return {
@@ -61,11 +66,13 @@ export function useForm(initialValues, Validate,setsubmission,setsubmittedValues
         handleChange,
         handleBlur,
         handleSubmit,
+        resetForm
     };
 }
 
 
-export function useForm3(initialValues, Validate) {
+export function useForm3({initialValues, validate,}) {
+    const [submission,setsubmission]=useState(false)
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
@@ -73,14 +80,14 @@ export function useForm3(initialValues, Validate) {
 
     useEffect(() => {
         const validationErrors = Object.keys(touched).reduce((acc, key) => {
-            const error = Validate({ ...values, [key]: values[key] })[key];
+            const error = validate({ ...values, [key]: values[key] })[key];
             if (error) {
                 acc[key] = error;
             }
             return acc;
         }, {});
         setErrors(validationErrors);
-    }, [values, touched,Validate]);
+    }, [values, touched,validate]);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -101,7 +108,7 @@ export function useForm3(initialValues, Validate) {
 
     const handleSubmit = (e, callback) => {
         e.preventDefault();
-        const validationErrors = Validate(values);
+        const validationErrors = validate(values);
         setErrors(validationErrors);
         setTouched(
             Object.keys(values).reduce((acc, key) => {
@@ -111,11 +118,16 @@ export function useForm3(initialValues, Validate) {
         );
         if (Object.keys(validationErrors).length === 0) {
             
-            console.log("values")
         }
-        
+        setsubmission(true)
     };
 
+    const resetForm = () => {
+        setValues(initialValues);
+        setErrors({});
+        setTouched({});
+        setsubmission(false);
+    };
 
     return {
         values,
@@ -124,5 +136,8 @@ export function useForm3(initialValues, Validate) {
         handleChange,
         handleBlur,
         handleSubmit,
+        submission,
+        setsubmission,
+        resetForm
     };
 }

@@ -15,7 +15,7 @@ export default function Level2() {
     interviewtime: "",
   };
 
-  const { values, errors, touched, submission,setsubmission,handleBlur, handleChange, handleSubmit } =
+  const { values, errors, touched, submission,handleBlur,resetForm, handleChange, handleSubmit } =
     useForm2(initialValues, Validate2,);
 
 
@@ -48,7 +48,7 @@ export default function Level2() {
           <button
             className="bg-green-500 text-white mt-4 px-4 py-2 rounded-md"
             type="reset"
-            onClick={() => setsubmission(!submission)}
+            onClick={() => (resetForm)}
           >
             Agree
           </button>

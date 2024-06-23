@@ -53,6 +53,12 @@ export function useForm2(initialValues, validate,) {
         setsubmission(true)
     };
 
+    const resetForm = () => {
+        setValues(initialValues);
+        setErrors({});
+        setTouched({});
+        setsubmission(false);
+    };
 
     return {
         values,
@@ -62,7 +68,8 @@ export function useForm2(initialValues, validate,) {
         handleBlur,
         handleSubmit,
         submission,
-        setsubmission
+        setsubmission,
+        resetForm
     };
 }
 
